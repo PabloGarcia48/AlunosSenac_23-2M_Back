@@ -21,15 +21,13 @@ async function fetchData() {
                 <td>${car.price}</td>   
                 <td>${fuelText}</td>
                 <td>
+                <button class="btn btn-warning btn-sm" id="update-btn" data-id="${car._id}">Editar</button>
                 <button class="btn btn-danger btn-sm" id="delete-btn" data-id="${car._id}">Deletar</button>
                 </td>
             `;
             tableBody.innerHTML += row;
         })
         
-
-
-
     } catch (error) {
         
     }
@@ -49,7 +47,6 @@ function getFuelName(value) {
 
 
 async function addCar() {
-// event.preventDefault()
 
     const brand = document.getElementById("inputBrand").value;
     const name = document.getElementById("inputName").value;
@@ -81,8 +78,6 @@ async function addCar() {
     }
 }
 
-// document.getElementById("carForm").addEventListener("submit", addCar())
-
 document.addEventListener('click', function(event) {
     if (event.target.id.startsWith('delete-btn')) {
         const carId = event.target.getAttribute('data-id');
@@ -104,14 +99,75 @@ async function deleteCar(carId) {
             throw new Error("Erro ao Deletar o carro");
         }
 
-        console.log("Carro deletado com sucesso!");
+        alert(`Carro deletado com sucesso! ${carId}`);
         
         location.reload()
-
+        
     } catch (error) {
         console.error(error);
     }
+
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+
+    document.body.insertAdjacentHTML('beforeend', `
+                <div class="modal fade" id="editCarModal" tabindex="-1"  aria-labelledby="editCarModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editCarModalLabel">Editar Carro</h5>
+                        <button class="btn-close" type="button" id="closeEditModal" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="editCarForm">
+                            <input type="hidden" id="editCarId">
+                            <div class="mb-3">
+                                <label for="editBrand" class="form-label">Marca</label>
+                                <input type="text" class="form-control" id="editBrand" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="editName" class="form-label">Nome</label>
+                                <input type="text" class="form-control" id="editName" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="editPrice" class="form-label">Preço</label>
+                                <input type="number" class="form-control" id="editPrice" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="editFuelType" class="form-label">Tipo de Combustível</label>
+                                <select class="form-select" id="editFuelType" required>
+                                    <option value="0">Desconhecido</option>
+                                    <option value="1">Gasolina</option>
+                                    <option value="2">Etanol + Gasolina</option>
+                                    <option value="3">Elétrico</option>
+                                    <option value="4">Etanol</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary" id="saveEditCar">Salvar Alterações</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `);
+
+    document.getElementById('car-table').addEventListener('click', function (event){
+        if (event.target.id.startsWith('update-btn')) {
+            const carId = event.target.getAttribute('data-id');
+            openEditModal(carId);
+        }
+    });
+
+    async function openEditModal(carId) {
+        
+    }
+
+})
+
+
+
+
 
 
 fetchData()
