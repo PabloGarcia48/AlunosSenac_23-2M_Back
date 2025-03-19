@@ -49,14 +49,19 @@ function getFuelName(value) {
 
 
 async function addCar() {
-    // event.preventDefault();
+// event.preventDefault()
 
-    var data = {
-            "brand": "Volvo",
-            "gasType": 2,
-            "name": "XC 60",
-            "price": 150000
-    }
+    const brand = document.getElementById("inputBrand").value;
+    const name = document.getElementById("inputName").value;
+    const price = parseFloat(document.getElementById("inputPrice").value);
+    const fuelType = document.getElementById("fuelType").value;
+
+    const newCar = {
+        "brand": brand,
+        "name": name,
+        "price": price,
+        "gasType": fuelType
+    };
 
     try {
         const response = await fetch('https://carangas.herokuapp.com/cars' ,{
@@ -64,7 +69,7 @@ async function addCar() {
             headers: {
                 "Content-Type": "application/json"
         },
-            body: JSON.stringify(data)
+            body: JSON.stringify(newCar)
     });
 
     console.log("Carro adicionado com sucesso");
@@ -74,10 +79,9 @@ async function addCar() {
     } catch (error) {
         console.error(error);
     }
-
 }
 
-document.getElementById("carForm").addEventListener("submit", addCar())
+// document.getElementById("carForm").addEventListener("submit", addCar())
 
 document.addEventListener('click', function(event) {
     if (event.target.id.startsWith('delete-btn')) {
