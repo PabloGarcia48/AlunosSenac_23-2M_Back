@@ -82,7 +82,12 @@ document.addEventListener('click', function(event) {
     if (event.target.id.startsWith('delete-btn')) {
         const carId = event.target.getAttribute('data-id');
 
+        //Chama a função
         deleteCar(carId);
+
+        // Apaga a linha
+        const row = event.target.closest('tr');
+        row.remove();
     }
 })
 
@@ -95,13 +100,9 @@ async function deleteCar(carId) {
             }
         });
 
-        if (!response.ok) {
-            throw new Error("Erro ao Deletar o carro");
-        }
-
-        alert(`Carro deletado com sucesso! ${carId}`);
+        // alert(`Carro deletado com sucesso! ${carId}`);
         
-        location.reload()
+        // location.reload()
         
     } catch (error) {
         console.error(error);
