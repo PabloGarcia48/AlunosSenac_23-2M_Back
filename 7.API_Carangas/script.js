@@ -163,7 +163,7 @@ document.addEventListener('DOMContentLoaded', function() {
         try {
             const response = await fetch(`https://carangas.herokuapp.com/cars/${carId}`);
 
-            const car = await response.JSON();
+            const car = await response.json();
 
             document.getElementById('editCarId').value = car._id;
             document.getElementById('editBrand').value = car.brand;
@@ -177,6 +177,42 @@ document.addEventListener('DOMContentLoaded', function() {
             console.error(error);
         }
     }
+
+    document.getElementById('editCarForm').addEventListener('submit', async function (event) {
+        event.preventDefault();
+
+        const carId = document.getElementById('editCarId').value;
+        const updatedCar = {
+            brand: document.getElementById('editBrand').value,
+            name: document.getElementById('editName').value,
+            price: parseFloat(document.getElementById('editPrice').value),
+            gasType: document.getElementById('editFuelType').value
+        };
+
+        try {
+            const response = await fetch(`https://carangas.herokuapp.com/cars/${carId}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(updatedCar)
+            }); 
+
+            console.log("Carro atualizado com sucesso");
+
+            const editModal = bootstrap.Modal.getInstance(document.getElementById('editCarModal'));
+            editModal.hide();
+
+            fetchData();            
+            
+        } catch (error) {
+            console.log("Não atualizei o carro");
+            
+            console.error(error);
+        }
+
+
+    })
 
 })
 
