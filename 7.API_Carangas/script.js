@@ -160,7 +160,22 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     async function openEditModal(carId) {
-        
+        try {
+            const response = await fetch(`https://carangas.herokuapp.com/cars/${carId}`);
+
+            const car = await response.JSON();
+
+            document.getElementById('editCarId').value = car._id;
+            document.getElementById('editBrand').value = car.brand;
+            document.getElementById('editName').value = car.name;
+            document.getElementById('editPrice').value = car.price;
+            document.getElementById('editFuelType').value = car.gasType;
+
+            const editModal = new bootstrap.Modal(document.getElementById('editCarModal'));
+            editModal.show();
+        } catch (error) {
+            console.error(error);
+        }
     }
 
 })
