@@ -8,5 +8,9 @@ Nome: Maria
 
 */
 
+$nomes = ["Ana", "Carlos", "Maria"];
 
+foreach ($nomes as $nome) {
+    echo "Nome: $nome <br>";
+}
 ?>
