@@ -3,5 +3,3 @@
 # Aulas Feitas para os alunos do Senac São Leopoldo do curso de TDS Turma 23-2M (ano 2025)
 
 Todos os códigos usados foram feitos em sala de aula e corrigidos.
-
-https://www.unisinos.br/noticias/product-design-academy-abre-edital-de-inscricoes/
